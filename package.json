@@ -1,0 +1,33 @@
+{
+  "name": "mss-catalogit-api",
+  "version": "0.3.1",
+  "description": "An api that indexes contianers, which live in some registry",
+  "main": "server.js",
+  "scripts": {
+    "readme": "./restit/generate-readme.js > README.md",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "bitbucket.org/vgtf/mss-catalogit-api"
+  },
+  "engines": {
+    "node": "4.3.1",
+    "npm": "2.14.12"
+  },
+  "keywords": [
+    "docker",
+    "catalog"
+  ],
+  "dependencies": {
+    "body-parser": "1.15.0",
+    "cors": "2.7.1",
+    "express": "4.13.4",
+    "mongoose": "4.4.4",
+    "morgan": "1.7.0",
+    "pluralize": "1.2.1",
+    "randomstring": "1.1.4",
+    "request": "2.69.0"
+  },
+  "license": "MIT"
+}
