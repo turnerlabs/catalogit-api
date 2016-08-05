@@ -10,7 +10,8 @@ e.isString = function(callBack,i) {
 }
 
 e.isValidDockerLink = function(callBack,i) {
-    callBack(( /.*:.*/.test(i) ));
+  var regexp = /^([a-zA-Z0-9.-]*)(\/?([a-z0-9.-]{1,63}))+:?([a-zA-Z0-9.-]*)$/
+  callBack(regexp.test(i));
 }
 
 e.isValidPort = function(callBack,i) {
