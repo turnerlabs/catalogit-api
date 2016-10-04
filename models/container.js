@@ -5,6 +5,8 @@ schema.container = {
   _metadata: {
     topLevel: true,
     userEditable: true,
+    updates: false,
+    deletes: false,
     find: true,
     default: 'name',
     andFields: ['version']
