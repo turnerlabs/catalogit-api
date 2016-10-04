@@ -435,12 +435,9 @@ module.exports = (schemas, mongoose, config) => {
         details: err
       }));
     } else {
-      if(!o || typeof o.error !== 'undefined') {
-        if (o.error.match(/Container Error.+Specify unique combinations/)) {
-          res.status(409);
-        } else {
-          res.status(422);
-        }
+      console.log(o)
+      if(!o || o.error) {
+        res.status(422);
         res.send(JSON.stringify(o));
       } else {
         res.send(JSON.stringify(documentToObject(o)));
