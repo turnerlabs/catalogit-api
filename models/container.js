@@ -37,6 +37,6 @@ schema.container = {
     required: true,
     test: helpers.isValidDockerLink,
     description: "The docker image tag.",
-    requirement: "must be a valid docker link (formatted docker_image_name:tag)"
+    requirement: "must be a valid docker link (formatted docker-image-name:tag. With no underscores!"
   }
 }
