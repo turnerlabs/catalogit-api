@@ -1,6 +1,6 @@
 {
   "name": "mss-catalogit-api",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "An api that indexes contianers, which live in some registry",
   "main": "server.js",
   "scripts": {
