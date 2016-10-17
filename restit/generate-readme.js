@@ -91,7 +91,8 @@ request(fmt('http://localhost:%s/v1/endpoints', port), (error, response, body) =
   if (!error && response.statusCode == 200) {
     data = JSON.parse(body);
 
-    p('# MSS CatalogIt API\n');
+    p('# CatalogIt API\n');
+    p(`[![CircleCI](https://circleci.com/gh/${packageJson.namespace}/${packageJson.name}/tree/master.svg?style=svg)](https://circleci.com/gh/${packageJson.namespace}/${packageJson.name}/tree/master)`)
     p('API Version `%s`\n', packageJson.version);
 
     Object.keys(data).forEach(function (type) {

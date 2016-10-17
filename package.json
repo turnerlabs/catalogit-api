@@ -1,11 +1,13 @@
 {
-  "name": "mss-catalogit-api",
-  "version": "0.4.0",
+  "name": "catalogit-api",
+  "version": "0.4.1",
+  "namespace": "turnerlabs",
   "description": "An api that indexes contianers, which live in some registry",
   "main": "server.js",
   "scripts": {
     "readme": "./restit/generate-readme.js > README.md",
-    "test": "test"
+    "test": "node ./node_modules/mocha/bin/mocha",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,11 @@
     "pluralize": "1.2.1",
     "randomstring": "1.1.4",
     "request": "2.69.0"
+  },
+  "devDependencies": {
+    "chai": "3.5.0",
+    "mocha": "3.0.2",
+    "supertest": "2.0.0"
   },
   "license": "MIT"
 }
