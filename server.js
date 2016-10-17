@@ -82,9 +82,10 @@ allEndpoints.forEach((endpoint) => {
 
 
 app.get(handlers.config.versionPath + '/endpoints', (req, res) => restit.genDocEndpoints(endpoints, req, res));
-app.get(handlers.config.hc, (req, res) => res.send('VERSION: ' + handlers.config.version));
+app.get(handlers.config.hc, (req, res) => res.json({version: handlers.config.version}));
 app.listen(handlers.config.port, () => {
   console.log('\n-------------------------------------------------\n');
   console.log('Catalogit-API is running on ' + handlers.config.port);
   console.log('\n-------------------------------------------------\n');
 });
+module.exports = app;
