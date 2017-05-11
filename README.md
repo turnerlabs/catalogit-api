@@ -1,7 +1,7 @@
 # CatalogIt API
 
 [![CircleCI](https://circleci.com/gh/turnerlabs/catalogit-api/tree/master.svg?style=svg)](https://circleci.com/gh/turnerlabs/catalogit-api/tree/master)
-API Version `0.4.0`
+API Version `1.0.0`
 
 ### GET `/v1/containers`
 
