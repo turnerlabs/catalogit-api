@@ -1,6 +1,6 @@
 {
   "name": "catalogit-api",
-  "version": "0.4.1",
+  "version": "1.0.0",
   "namespace": "turnerlabs",
   "description": "An api that indexes contianers, which live in some registry",
   "main": "server.js",

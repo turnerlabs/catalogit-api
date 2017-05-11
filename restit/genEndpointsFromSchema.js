@@ -86,11 +86,11 @@ module.exports = (schemas, mongoose, config) => {
     if(typeof r.metadata.userEditable === 'boolean' && r.metadata.userEditable) {
       endpoints.push({path: r.basePath + '/' + r.plural, type: 'post', function: r.create, fields: r.fields, description: createDesc});
       let andQuery = ((r.metadata.andFields && r.metadata.andFields.length > 0) ? ('/:' + r.metadata.andFields.join('/:')) : '');
-      
+
       if (r.metadata.updates === undefined || r.metadata.updates === true) {
           endpoints.push({path: r.basePath + '/' + r.singular + '/:' + r.metadata.default + andQuery, type: 'put', function: r.update, fields: r.fields, description: updateDesc});
       }
-      
+
       if (r.metadata.deletes === undefined || r.metadata.deletes === true) {
           endpoints.push({path: r.basePath + '/' + r.singular + '/:' + r.metadata.default + andQuery, type: 'delete', function: r.delete, fields: r.fields, description: deleteDesc});
       }
@@ -443,7 +443,7 @@ module.exports = (schemas, mongoose, config) => {
     } else {
       console.log(o)
       if(!o || o.error) {
-        res.status(422);
+        res.status(409);
         res.send(JSON.stringify(o));
       } else {
         res.send(JSON.stringify(documentToObject(o)));
