@@ -1,5 +1,8 @@
 "use strict";
 
+let cached,
+    ttl = (process.env.CACHE_TTL || 60) * 1000;
+
 module.exports = function (lm) {
     let m = lm,
         e = {};
@@ -7,17 +10,22 @@ module.exports = function (lm) {
     e.getContainers = function (req, res) {
         let promises = [];
 
-        return m.Container.find({}).sort({name: 1}).exec((err, results) => {
-            if (err) {
-                res.status(500);
-                return res.json({ error: 'Something went wrong' });
-            }
+        if (cached) {
+            console.log('using cached response');
+            res.json(cached);
+        } else {
+            return m.Container.find({}).sort({name: 1}).exec((err, results) => {
+                if (err) {
+                    res.status(500);
+                    return res.json({ error: 'Something went wrong' });
+                }
 
-            let data = results.map((result) => result.name).filter((result, i , results) => results.indexOf(result) === i);
+                let data = results.map((result) => result.name).filter((result, i , results) => results.indexOf(result) === i);
 
-            cached = data;
-            res.json(data);
-        });
+                cached = data;
+                res.json(data);
+            });
+        }
     }
 
     e.getContainerVersions = function (req, res) {
@@ -27,7 +35,7 @@ module.exports = function (lm) {
                 return res.json({ error: 'Container not found' });
             }
 
-            let data = container.map((data) => { version: data.version, name: data.name, image: data.image });
+            let data = container.map((data) => ({ version: data.version, name: data.name, image: data.image }));
             res.json(data);
         });
     }
@@ -45,3 +53,10 @@ module.exports = function (lm) {
 
     return e;
 };
+
+setInterval(_ => {
+    if (cached) {
+        console.log('cleared cached');
+        cached = null;
+    }
+}, ttl);
