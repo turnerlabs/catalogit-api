@@ -38,7 +38,7 @@ let allEndpoints = modelEndpoints.concat([
 
 app.use(bodyParser.json());
 app.use(cors());
-app.use(morgan('combined', { skip: (req, res) => req.path === handlers.config.hc } ));
+app.use(morgan('tiny', { skip: (req, res) => req.path === handlers.config.hc } ));
 app.use(handlers.errorHandler);
 
 app.all('/v1*', (req, res, next) => {
