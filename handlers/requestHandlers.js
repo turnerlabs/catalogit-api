@@ -1,30 +1,17 @@
 "use strict";
 
-let cached,
-    ttl = (process.env.CACHE_TTL || 60) * 1000;
-
 module.exports = function (lm) {
     let m = lm,
         e = {};
 
     e.getContainers = function (req, res) {
-        let promises = [];
 
-        if (cached) {
-            console.log('using cached response');
-            return res.json(cached);
-        }
-
-        return m.Container.find({}).sort({name: 1}).exec((err, results) => {
+        return m.Container.distinct('name', {}).exec((err, results) => {
             if (err) {
                 res.status(500);
                 return res.json({ error: 'Something went wrong' });
             }
-
-            let data = results.map((result) => result.name).filter((result, i , results) => results.indexOf(result) === i);
-
-            cached = data;
-            res.json(data);
+            res.json(results);
         });
     }
 
@@ -53,10 +40,3 @@ module.exports = function (lm) {
 
     return e;
 };
-
-setInterval(_ => {
-    if (cached) {
-        console.log('cleared cached');
-        cached = null;
-    }
-}, ttl);
