@@ -19,19 +19,31 @@ let allEndpoints = modelEndpoints.concat([
     path:        '/v1/containers',
     type:        'get',
     function:    requestHelper.getContainers,
-    description: 'Returns all container names',
+    description: 'Returns all container names.',
     fields: []
   }, {
     path:        '/v1/container/:name',
     type:        'get',
     function:    requestHelper.getContainerVersions,
-    description: 'Returns a container object with all of its version',
+    description: 'Returns an array of all active containers; use query parameter `all` to see inactive and active containers.',
     fields: []
   }, {
     path:        '/v1/container/:name/:version',
     type:        'get',
     function:    requestHelper.getContainer,
-    description: 'Returns a single container object.',
+    description: 'Returns a single container.',
+    fields: []
+  }, {
+    path:        '/v1/container/:name/:version',
+    type:        'post',
+    function:    requestHelper.addContainer,
+    description: 'Sets a container to active state (must already exist via `POST /v1/containers`).',
+    fields: []
+  }, {
+    path:        '/v1/container/:name/:version',
+    type:        'delete',
+    function:    requestHelper.removeContainer,
+    description: 'Sets a container to inactive state. Will not be shown in default listing of container versions.',
     fields: []
   }
 ]);
@@ -48,7 +60,7 @@ app.all('/v1*', (req, res, next) => {
 
 app.post('/v1/containers', (req, res, next) => {
     if (!req.body.image) {
-        res.status(500).json({"message": "You must provide an image"});
+        res.status(422).json({"message": "You must provide an image."});
         return;
     }
     req.body.image = req.body.image.replace('https://', '').replace('http://', '');
