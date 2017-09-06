@@ -40,5 +40,16 @@ schema.container = {
     test: helpers.isValidDockerLink,
     description: "The docker image tag.",
     requirement: "must be a valid docker link (formatted docker-image-name:tag. With no underscores!"
+  },
+  active: {
+    type: Boolean,
+    unique: false,
+    create: true,
+    update: true,
+    required: false,
+    default: true,
+    test: helpers.isBoolean,
+    description: "Wether the name/version pair is active. Inactive means it will not be shown",
+    requirement: "Must be a boolean value."
   }
 }

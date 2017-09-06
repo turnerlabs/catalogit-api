@@ -16,7 +16,12 @@ module.exports = function (lm) {
     }
 
     e.getContainerVersions = function (req, res) {
-        return m.Container.find({ name: req.params.name }).exec((err, container) => {
+        let opts = { name: req.params.name, active: true };
+        if (typeof req.query.all !== 'undefined') {
+            delete opts.active;
+        }
+
+        return m.Container.find(opts).exec((err, container) => {
             if (err || !container) {
                 res.status(404);
                 return res.json({ error: 'Container not found' });
@@ -34,7 +39,41 @@ module.exports = function (lm) {
                 return res.json({ error: 'Container not found' });
             }
 
-            res.json({ name: container.name, version: container.version, image: container.image });
+            res.json({ name: container.name, version: container.version, image: container.image, active: container.active });
+        });
+    }
+
+    e.addContainer = function (req, res) {
+        return m.Container.findOne({ name: req.params.name, version: req.params.version }).exec((err, container) => {
+            if (err || !container) {
+                res.status(404);
+                return res.json({ error: 'Container not found' });
+            }
+            container.active = true;
+            container.save((err, item) => {
+                if (err) {
+                    return res.json({ error: 'Container not updated.', message: err.message });
+                }
+
+                res.json({ name: item.name, version: item.version, image: item.image, active: item.active });
+            });
+        });
+    }
+
+    e.removeContainer = function (req, res) {
+        return m.Container.findOne({ name: req.params.name, version: req.params.version }).exec((err, container) => {
+            if (err || !container) {
+                res.status(404);
+                return res.json({ error: 'Container not found' });
+            }
+            container.active = false;
+            container.save((err, item) => {
+                if (err) {
+                    return res.json({ error: 'Container not updated.', message: err.message });
+                }
+
+                res.json({ name: item.name, version: item.version, image: item.image, active: item.active });
+            });
         });
     }
 
