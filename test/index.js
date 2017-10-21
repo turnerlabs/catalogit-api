@@ -63,4 +63,5 @@ describe('isValidDockerLink', () => {
     it('should return false for invalid links', () => helpers.isValidDockerLink(expectTrue, 'foo-bar:0.1.1'));
     it('should return false for invalid links', () => helpers.isValidDockerLink(expectTrue, 'garbage/foo-bar:0.1.1'));
     it('should return false for invalid links', () => helpers.isValidDockerLink(expectTrue, 'garbage.io/garbage/foo-bar:0.1.1'));
+    it('should return false for invalid links', () => helpers.isValidDockerLink(expectFalse, 'garbage.io/garbage/foo-bar:0.1.1_TESTER_MCTESTER_'));
 });
